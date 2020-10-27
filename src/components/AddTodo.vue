@@ -1,17 +1,33 @@
 <template>
-  <form>
+  <form @submit="addTodo">
     <input type="text" v-model="title" name="title" placeholder="Add Todo ..." />
     <input type="submit" value="Submit" class="btn" />
   </form>
 </template>
 
 <script>
+import {v4 as uuid } from "uuid";
 export default {
   name: "AddTodo",
   data(){
       return{
           title:''
       }
+  },
+  methods:{
+    addTodo(e){
+      e.preventDefault();
+      const newTodo = {
+        id: uuid,
+        title: this.title,
+        completed: false
+      }
+
+      //send the new todo to parent
+      this.$emit('add-todo', newTodo);
+
+      this.title = '';
+    }
   }
 };
 </script>
